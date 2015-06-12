@@ -5,15 +5,18 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sys                       # platform, args, run tools
 import os                        # platform, args, run tools
-import glob
-
-
+import glob2
+import struct 
+from gdalconst import * 
+from osgeo import gdal_array
 # Going through files in a directory
-glob2.glob('./*.tif')
-# ['./outline.txt', './pip-log.txt', './test.txt', './testingvim.txt']
+import glob
+glob2.glob('./*.txt')
+#['./outline.txt', './pip-log.txt', './test.txt', './testingvim.txt']
 
 
 # Loop through raster bands
+
 
 # Band 1
 src_ds = gdal.Open("LS081410412015060100000000MS00_B01.tif")
@@ -35,6 +38,8 @@ for band in range( src_ds.RasterCount ):
 
     print ("[ STATS ] =  Minimum=%.3f, Maximum=%.3f, Mean=%.3f, StdDev=%.3f" % ( \
                 stats[0], stats[1], stats[2], stats[3] ))
-
-# To get actual band raw values as matrix
-print (srcband.GetDataSet())
+myarray=gdal_array.BandReadAsArray(srcband)
+#myarray = np.array(srcband.ReadAsArray())
+#myarray=myarray.astype(float)
+print(np.max(myarray))
+# SLIP 
